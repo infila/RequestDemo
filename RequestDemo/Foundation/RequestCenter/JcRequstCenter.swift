@@ -7,18 +7,19 @@
 
 import UIKit
 
-typealias RequestCompletionHandler = (_ respose:URLResponse?, _ data: Data?, _ error: Error?) -> Void
+public typealias RequestCompletionHandler = (_ respose: HTTPURLResponse?, _ data: Data?, _ error: Error?) -> Void
 
-class JcRequstCenter: JcSingleton {
-  
-  var timeoutInterval = 15.0
-  var operationQueue: OperationQueue {
+public class JcRequstCenter {
+  public static let shared = JcRequstCenter()
+
+  public var timeoutInterval = 15.0
+  public var operationQueue: OperationQueue {
     let queue = OperationQueue()
     queue.maxConcurrentOperationCount = 3
     return queue
   }
 
-  public func httpGet(fromUrl urlPath: String, parameters:[String: String] = [:], headers:[String: String] = [:], completionHandler: @escaping RequestCompletionHandler) {
+  public func httpGet(fromUrl urlPath: String, parameters: [String: String] = [:], headers: [String: String] = [:], completionHandler: @escaping RequestCompletionHandler) {
     assert(urlPath.hasPrefix("http://") || urlPath.hasPrefix("https://"))
     var urlString = urlPath
     if !parameters.isEmpty {
@@ -31,18 +32,22 @@ class JcRequstCenter: JcSingleton {
     var urlRequst = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: timeoutInterval)
     urlRequst.httpMethod = "GET"
     urlRequst.allHTTPHeaderFields = headers
+    NSLog("Sending request: \(url)")
     let operation = BlockOperation.init {
-      let dataTask = URLSession.shared.dataTask(with: urlRequst) {data, response, error in
-        completionHandler(response, data, error)
+      let dataTask = URLSession.shared.dataTask(with: urlRequst) { data, response, error in
+        if let error = error {
+          NSLog("Response of \(url) meet an error: \(error.localizedDescription)")
+        }
+        completionHandler(response as? HTTPURLResponse, data, error)
       }
       dataTask.resume()
     }
     operationQueue.addOperation(operation)
   }
-  
+
   public func httpPost() {
-    // TODO http post
+    // TODO: http post
   }
+
+  private init() {}
 }
-
-

@@ -7,11 +7,9 @@
 
 import UIKit
 
-class JcPersistantCenter: JcSingleton {
-  
-  private let fileManager = FileManager()
-  private let rootPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0].appending("/root")
-  
+public class JcPersistantCenter {
+  public static let shared = JcPersistantCenter()
+
   public func fileExists(_ fileName: String) -> Bool {
     assert(!fileName.isEmpty)
     return fileManager.fileExists(atPath: filePath(forFile: fileName))
@@ -37,19 +35,32 @@ class JcPersistantCenter: JcSingleton {
       }
     }
     do {
-      try data.write(to: URL.init(fileURLWithPath: path), options: .atomic)
+      try data.write(to: URL(fileURLWithPath: path), options: .atomic)
     } catch let error as NSError {
       assert(false, error.domain)
     }
   }
-  
-  public func loadData(fromFile fileName: String, compressing: Bool = false, encrypting: Bool = false) -> Data {
+
+  public func fileNames(inFolder folder: String) -> [String] {
+    let path = filePath(forFile: folder)
+    var isFolder: ObjCBool = false
+    assert(fileManager.fileExists(atPath: path, isDirectory: &isFolder))
+    var result: [String] = []
+    do {
+      try result = fileManager.contentsOfDirectory(atPath: path)
+    } catch let error as NSError {
+      assert(false, error.domain)
+    }
+    return result
+  }
+
+  public func loadData(fromFile fileName: String, compressing: Bool = false, encrypting: Bool = false) -> Data? {
     assert(!fileName.isEmpty)
     assert(fileExists(fileName))
     let path = filePath(forFile: fileName)
     var data = Data()
     do {
-      try data = Data(contentsOf: URL.init(fileURLWithPath: path))
+      try data = Data(contentsOf: URL(fileURLWithPath: path))
       if encrypting {
         data = unencryptingData(data)
       }
@@ -61,18 +72,23 @@ class JcPersistantCenter: JcSingleton {
     }
     return data
   }
-  
+
   public func removeFile(_ fileName: String) {
     guard fileExists(fileName) else {
       return
     }
-    try? fileManager.removeItem(atPath: filePath(forFile: fileName)) 
+    try? fileManager.removeItem(atPath: filePath(forFile: fileName))
   }
-  
+
+  private let fileManager = FileManager()
+  private let rootPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0].appending("/root")
+
+  private init() {}
+
   private func filePath(forFile fileName: String) -> String {
-    return rootPath + "/" + fileName
+    return rootPath + fileName
   }
-  
+
   private func fileDirectory(forFile fileName: String) -> String {
     let path = filePath(forFile: fileName)
     var directory = path
@@ -80,24 +96,25 @@ class JcPersistantCenter: JcSingleton {
     directory.removeSubrange(range)
     return directory
   }
-  
+
   private func compressingData(_ data: Data) -> Data {
     // TODO: compressing
     return Data()
   }
-  
+
   private func uncompressingData(_ data: Data) -> Data {
     // TODO: uncompressing
     return Data()
   }
-  
+
   private func encryptingData(_ data: Data) -> Data {
     // TODO: encrypting
     return Data()
   }
-  
+
   private func unencryptingData(_ data: Data) -> Data {
     // TODO: unencrypting
     return Data()
   }
 }
+

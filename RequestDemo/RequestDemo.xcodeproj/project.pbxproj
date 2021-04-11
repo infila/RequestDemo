@@ -19,6 +19,7 @@
 		F2CAA21B261435E80029C4B8 /* JcPersistantCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CAA21A261435E80029C4B8 /* JcPersistantCenter.swift */; };
 		F2CAA2292614613B0029C4B8 /* JcRequstCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CAA2282614613B0029C4B8 /* JcRequstCenter.swift */; };
 		F2CAA22E261466B90029C4B8 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CAA22D261466B90029C4B8 /* String+Extension.swift */; };
+		F2E0AACE2622BFEC0084FE26 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E0AACD2622BFEC0084FE26 /* HistoryTableViewCell.swift */; };
 		F2F0B6B32621D9F2002B459B /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F0B6B22621D9F2002B459B /* Date+Extension.swift */; };
 		F2F0B6B82621DBC3002B459B /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F0B6B72621DBC3002B459B /* Utility.swift */; };
 		F2F0B6C02621E9A9002B459B /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F0B6BF2621E9A9002B459B /* HistoryViewController.swift */; };
@@ -60,6 +61,7 @@
 		F2CAA21A261435E80029C4B8 /* JcPersistantCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JcPersistantCenter.swift; sourceTree = "<group>"; };
 		F2CAA2282614613B0029C4B8 /* JcRequstCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JcRequstCenter.swift; sourceTree = "<group>"; };
 		F2CAA22D261466B90029C4B8 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		F2E0AACD2622BFEC0084FE26 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		F2F0B6B22621D9F2002B459B /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		F2F0B6B72621DBC3002B459B /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		F2F0B6BF2621E9A9002B459B /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
@@ -157,18 +159,10 @@
 			isa = PBXGroup;
 			children = (
 				F2BC4EEC260CA29F00A88EA8 /* Categories */,
-				F2BC4EDF260C91EE00A88EA8 /* Common */,
 				F2BC4EEB260CA23C00A88EA8 /* RequestCenter */,
 				F2BC4EEA260CA22C00A88EA8 /* PersistantCenter */,
 			);
 			path = Foundation;
-			sourceTree = "<group>";
-		};
-		F2BC4EDF260C91EE00A88EA8 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Common;
 			sourceTree = "<group>";
 		};
 		F2BC4EE0260CA08F00A88EA8 /* Model */ = {
@@ -181,6 +175,7 @@
 		F2BC4EE1260CA09600A88EA8 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				F2E0AACC2622BFC60084FE26 /* Cells */,
 				F2BC4EE2260CA0D800A88EA8 /* BaseViewController.swift */,
 				F2BC4DE1260C8F3600A88EA8 /* MainViewController.swift */,
 				F2F0B6BF2621E9A9002B459B /* HistoryViewController.swift */,
@@ -211,6 +206,14 @@
 				F2F0B6B22621D9F2002B459B /* Date+Extension.swift */,
 			);
 			path = Categories;
+			sourceTree = "<group>";
+		};
+		F2E0AACC2622BFC60084FE26 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F2E0AACD2622BFEC0084FE26 /* HistoryTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -351,6 +354,7 @@
 				F2CAA21B261435E80029C4B8 /* JcPersistantCenter.swift in Sources */,
 				F2BC4DE2260C8F3600A88EA8 /* MainViewController.swift in Sources */,
 				F2F0B6B32621D9F2002B459B /* Date+Extension.swift in Sources */,
+				F2E0AACE2622BFEC0084FE26 /* HistoryTableViewCell.swift in Sources */,
 				F2CAA22E261466B90029C4B8 /* String+Extension.swift in Sources */,
 				F2BC4DDE260C8F3600A88EA8 /* AppDelegate.swift in Sources */,
 			);

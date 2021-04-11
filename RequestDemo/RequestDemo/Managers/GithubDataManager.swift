@@ -8,19 +8,22 @@
 import UIKit
 
 class GithubDataManager {
-  typealias GitData = (String, String)
+  typealias GitData = (Date, String)
 
   static let UPDATE_NOTIFICATION = "UPDATE_NOTIFICATION"
   static let shared = GithubDataManager()
 
-  func fire() {
-    timer.fire()
+  func start() {
+    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+      self.timer.fire()
+    }
   }
 
   func invalidate() {
     timer.invalidate()
   }
 
+  private(set) var urlPath: String = "https://api.github.com"
   private(set) var historyData: [GitData] = []
   private(set) var lastData: GitData?
 
@@ -30,10 +33,6 @@ class GithubDataManager {
 }
 
 private extension GithubDataManager {
-  var urlPath: String {
-    return "https://api.github.com"
-  }
-
   var baseDirectory: String {
     return "/GitData"
   }
@@ -47,14 +46,18 @@ private extension GithubDataManager {
     if !JcPersistantCenter.shared.fileExists(baseDirectory) {
       return
     }
-    let fileNames = JcPersistantCenter.shared.fileNames(inFolder: baseDirectory)
+    let fileNames = JcPersistantCenter.shared.fileNames(inFolder: baseDirectory).sorted { (s1, s2) -> Bool in
+      Int64(s1) ?? 0 < Int64(s2) ?? 0
+    }
     for fileName in fileNames {
       guard let data = JcPersistantCenter.shared.loadData(fromFile: baseDirectory + "/" + fileName),
-            let dataStr = String(bytes: data, encoding: .utf8) else {
+            let dataStr = String(bytes: data, encoding: .utf8),
+            let timeMills = Int64(fileName) else {
         assert(false)
         continue
       }
-      historyData.append((fileName, dataStr))
+      let date = Date(timeMills: timeMills)
+      historyData.append((date, dataStr))
     }
     if historyData.count != 0 {
       lastData = historyData[0]
@@ -77,9 +80,9 @@ private extension GithubDataManager {
       }
       self.save(data)
       if let lastData = self.lastData {
-        self.historyData.append(lastData)
+        self.historyData.insert(lastData, at: 0)
       }
-      self.lastData = ("\(Date().timeMills)", result)
+      self.lastData = (Date(), result)
       NotificationCenter.default.post(name: NSNotification.Name(rawValue: GithubDataManager.UPDATE_NOTIFICATION), object: nil)
     }
   }

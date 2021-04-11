@@ -8,10 +8,11 @@
 import Foundation
 
 class Utility {
-  func displayFormat(_ date:Date) -> String {
-    return date.toString(withFormat: "HH:mm:ss")
+  class func dateDisplayFormatNormal(_ date: Date) -> String {
+    return date.toString(withFormat: Date.DATE_FORMAT_TIME)
   }
-  
+
+  class func dateDisplayFormatDetail(_ date: Date) -> String {
+    return date.toString(withFormat: Date.DATE_FORMAT_FULL)
+  }
 }
-
-

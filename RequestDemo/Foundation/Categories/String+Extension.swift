@@ -8,10 +8,9 @@
 import Foundation
 
 extension String {
-  
-  public func url(appendParameters parameters:[String: String] = [:]) -> String {
-    assert(self.hasPrefix("https://") || self.hasPrefix("http://"))
-    if(parameters.isEmpty) {
+  public func url(appendParameters parameters: [String: String] = [:]) -> String {
+    assert(hasPrefix("https://") || hasPrefix("http://"))
+    if parameters.isEmpty {
       return self
     }
     var urlString = self

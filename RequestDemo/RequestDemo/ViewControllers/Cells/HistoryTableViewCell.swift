@@ -8,8 +8,8 @@
 import UIKit
 
 class HistoryTableViewCell: UITableViewCell {
-  @IBOutlet var contentLabel: UILabel!
-  @IBOutlet var timeLabel: UILabel!
+  @IBOutlet weak var contentLabel: UILabel!
+  @IBOutlet weak var timeLabel: UILabel!
 
   override func awakeFromNib() {
     super.awakeFromNib()

@@ -8,9 +8,9 @@
 import UIKit
 
 class MainViewController: BaseViewController {
-  @IBOutlet var urlLabel: UILabel!
-  @IBOutlet var timeLabel: UILabel!
-  @IBOutlet var contentView: UITextView!
+  @IBOutlet weak var urlLabel: UILabel!
+  @IBOutlet weak var timeLabel: UILabel!
+  @IBOutlet weak var contentView: UITextView!
 
   override func viewDidLoad() {
     super.viewDidLoad()
